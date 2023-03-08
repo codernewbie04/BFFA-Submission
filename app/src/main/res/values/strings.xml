@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Github User</string>
+    <string name="dicoding_submission">Dicoding Submission</string>
+    <string name="author">Created by Akmal M.F</string>
+    <string name="no_connection_error_message">Opps, internet terputus. Cek ulang koneksimu.</string>
+    <string name="search_text">Cari Users Github</string>
+    <string name="title_activity_detail">DetailAct</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="follows">follows</string>
+    <string name="repository">Repository</string>
+</resources>
