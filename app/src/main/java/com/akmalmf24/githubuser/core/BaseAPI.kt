@@ -1,6 +1,7 @@
 package com.akmalmf24.githubuser.core
 
 import com.akmalmf24.githubuser.BuildConfig
+import com.akmalmf24.githubuser.core.data.remote.service.GithubServices
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,7 +30,7 @@ object BaseAPI {
             }.build()
     }
 
-    fun provideGithubService():GithubServices{
+    fun provideGithubService(): GithubServices {
         val retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .client(provideOkHttpClient())

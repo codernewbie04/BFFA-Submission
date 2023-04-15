@@ -1,4 +1,4 @@
-package com.akmalmf24.githubuser.core.response
+package com.akmalmf24.githubuser.core.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 

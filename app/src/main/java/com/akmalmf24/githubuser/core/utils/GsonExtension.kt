@@ -7,5 +7,5 @@ import com.google.gson.reflect.TypeToken
  * Created by Akmal Muhamad Firdaus on 05/03/2023 17:36.
  * akmalmf007@gmail.com
  */
-inline fun <reified T> Gson.fromJson(json:String) =
+inline fun <reified T> Gson.fromJson(json:String): T =
     this.fromJson<T>(json,object : TypeToken<T>(){}.type)

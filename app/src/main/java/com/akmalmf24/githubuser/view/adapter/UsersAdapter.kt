@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.akmalmf24.githubuser.R
 import com.akmalmf24.githubuser.abstraction.base.BaseRecyclerViewAdapter
-import com.akmalmf24.githubuser.core.response.Users
+import com.akmalmf24.githubuser.core.data.remote.response.Users
 import com.akmalmf24.githubuser.databinding.ItemUsersBinding
 
 
@@ -23,16 +23,17 @@ class UsersAdapter(val showIcon: Boolean): BaseRecyclerViewAdapter<UsersAdapter.
         private val binding = ItemUsersBinding.bind(itemView)
         @SuppressLint("SetTextI18n")
         fun onBind(data: Users){
-            binding.imageIcon.visibility = if(showIcon) View.VISIBLE else View.GONE
-            binding.textUsername.text = data.login
-            binding.textRepos.text = data.htmlUrl
-            binding.textId.text = data.id.toString()
-            binding.userImage.load(data.avatarUrl) {
-                placeholder(R.color.gray)
-                error(R.color.red_400)
-            }
-            binding.root.setOnClickListener{
-                onItemClick?.invoke(data)
+            binding.apply {
+                imageIcon.visibility = if(showIcon) View.VISIBLE else View.GONE
+                textUsername.text = data.login
+                textRepos.text = data.htmlUrl
+                textId.text = data.id.toString()
+                userImage.load(data.avatarUrl) {
+                    placeholder(R.color.gray)
+                }
+                root.setOnClickListener{
+                    onItemClick?.invoke(data)
+                }
             }
         }
     }

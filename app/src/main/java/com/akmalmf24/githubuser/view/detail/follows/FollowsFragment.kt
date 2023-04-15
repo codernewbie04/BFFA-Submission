@@ -9,24 +9,11 @@ import com.akmalmf24.githubuser.abstraction.base.BaseFragment
 import com.akmalmf24.githubuser.abstraction.data.Resource
 import com.akmalmf24.githubuser.abstraction.data.Status
 import com.akmalmf24.githubuser.core.factory.GithubViewModelFactory
-import com.akmalmf24.githubuser.core.response.Users
+import com.akmalmf24.githubuser.core.data.remote.response.Users
 import com.akmalmf24.githubuser.databinding.FragmentFollowsBinding
 import com.akmalmf24.githubuser.view.adapter.UsersAdapter
 
 class FollowsFragment : BaseFragment() {
-    companion object {
-        private const val EXTRA_USERNAME = "username"
-        private const val EXTRA_SECTION = "section"
-        @JvmStatic
-        fun newInstance(username: String, section: Int) =
-            FollowsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(EXTRA_USERNAME, username)
-                    putInt(EXTRA_SECTION, section)
-                }
-            }
-    }
-
     private var _binding: FragmentFollowsBinding? = null
     private val binding get() = _binding!!
 
@@ -42,24 +29,19 @@ class FollowsFragment : BaseFragment() {
         val username = arguments?.getString(EXTRA_USERNAME)
         val type = if (section == 0) "followers" else "following"
         binding.rvUsers.setHasFixedSize(true)
-//        val linearLayoutManager = object : LinearLayoutManager(context) {
-//            override fun canScrollVertically(): Boolean {
-//                return false
-//            }
-//        }
         binding.rvUsers.adapter = adapterListUsers
         username?.let { viewModel.getFollows(it, type) }
     }
 
     override fun initObservable() {
-        viewModel.users.observe(this){
+        viewModel.users.observe(this) {
             handleUiState(it)
         }
     }
 
     @JvmName("handleUiStateUserResponse")
     private fun handleUiState(resource: Resource<List<Users>>) {
-        when(resource.status){
+        when (resource.status) {
             Status.LOADING -> {
                 binding.shimmerUser.visibility = View.VISIBLE
                 binding.shimmerUser.startShimmer()
@@ -71,7 +53,7 @@ class FollowsFragment : BaseFragment() {
                 binding.rvUsers.visibility = View.VISIBLE
             }
             Status.ERROR -> {
-                showErrorAlert(resource.cause, resource.message)
+                showErrorAlert(resource.message)
             }
         }
     }
@@ -80,7 +62,7 @@ class FollowsFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFollowsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -90,5 +72,18 @@ class FollowsFragment : BaseFragment() {
         _binding = null
     }
 
+    companion object {
+        private const val EXTRA_USERNAME = "username"
+        private const val EXTRA_SECTION = "section"
+
+        @JvmStatic
+        fun newInstance(username: String, section: Int) =
+            FollowsFragment().apply {
+                arguments = Bundle().apply {
+                    putString(EXTRA_USERNAME, username)
+                    putInt(EXTRA_SECTION, section)
+                }
+            }
+    }
 
 }

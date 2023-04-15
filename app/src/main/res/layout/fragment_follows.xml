@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.detail.follows.FollowsFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/gray_bg">
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerUser"

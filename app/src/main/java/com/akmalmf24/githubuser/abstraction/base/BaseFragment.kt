@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar
  * Created by Akmal Muhamad Firdaus on 05/03/2023 03:23.
  * akmalmf007@gmail.com
  */
-abstract class BaseFragment : Fragment(){
+abstract class BaseFragment : Fragment() {
     abstract fun initView(savedInstanceState: Bundle?)
 
     abstract fun initObservable()
@@ -24,12 +24,16 @@ abstract class BaseFragment : Fragment(){
     }
 
     private fun snackBarError(message: String) {
-        Snackbar.make(requireActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT)
+        Snackbar.make(
+            requireActivity().findViewById(android.R.id.content),
+            message,
+            Snackbar.LENGTH_SHORT
+        )
             .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.red_400))
             .show()
     }
 
-    fun showErrorAlert(cause: HttpResult, message: String? = null) {
+    fun showErrorAlert(message: String? = null) {
         snackBarError(message ?: "Unknown Error!")
     }
 

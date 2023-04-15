@@ -7,8 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.akmalmf24.githubuser.abstraction.data.Resource
 import com.akmalmf24.githubuser.abstraction.data.Status
-import com.akmalmf24.githubuser.core.response.Users
-import com.akmalmf24.githubuser.core.source.GithubDataSource
+import com.akmalmf24.githubuser.core.data.local.LocalDataSource
+import com.akmalmf24.githubuser.core.data.local.entity.FavoriteUserEntity
+import com.akmalmf24.githubuser.core.data.remote.response.Users
+import com.akmalmf24.githubuser.core.data.remote.source.GithubDataSource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
@@ -16,9 +19,10 @@ import kotlinx.coroutines.launch
  * akmalmf007@gmail.com
  */
 class MainViewModel(
+    private val local: LocalDataSource,
     private val remote: GithubDataSource,
     application: Application,
-): AndroidViewModel(application) {
+) : AndroidViewModel(application) {
     private val _users = MutableLiveData<Resource<List<Users>>>()
     val users: LiveData<Resource<List<Users>>> get() = _users
 
@@ -26,7 +30,7 @@ class MainViewModel(
         viewModelScope.launch { getPopularUser() }
     }
 
-    fun getPopularUser(){
+    fun getPopularUser() {
 
         viewModelScope.launch {
             remote.popularUser().collect {
@@ -35,10 +39,16 @@ class MainViewModel(
         }
     }
 
-    fun searchUser(username: String){
+    fun getFavoriteUser() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _users.postValue(mapToResource(local.getFavoriteUser()))
+        }
+    }
+
+    fun searchUser(username: String) {
         viewModelScope.launch {
             remote.searchUser(username).collect {
-                var dataUsers: List<Users> = if (it.status == Status.SUCCESS){
+                val dataUsers: List<Users> = if (it.status == Status.SUCCESS) {
                     it.data?.items as List<Users>
                 } else {
                     listOf()
@@ -48,5 +58,12 @@ class MainViewModel(
             }
         }
     }
+
+    private fun mapToResource(fav: List<FavoriteUserEntity>): Resource<List<Users>> {
+        return Resource(Status.SUCCESS, mapToListUser(fav), "ok!", 200)
+    }
+
+    private fun mapToListUser(fav: List<FavoriteUserEntity>) =
+        fav.map { f -> Users(f.username, f.htmlUrl, f.avatarUrl, f.id) }
 
 }

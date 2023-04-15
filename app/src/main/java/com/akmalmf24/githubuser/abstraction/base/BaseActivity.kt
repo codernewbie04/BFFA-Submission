@@ -11,7 +11,7 @@ import com.google.android.material.snackbar.Snackbar
  * Created by Akmal Muhamad Firdaus on 03/03/2023 23:34.
  * akmalmf007@gmail.com
  */
-abstract class BaseActivity : AppCompatActivity(){
+abstract class BaseActivity : AppCompatActivity() {
     abstract fun initView()
     abstract fun initObservable()
 
@@ -22,6 +22,12 @@ abstract class BaseActivity : AppCompatActivity(){
         initObservable()
     }
 
+    fun snackBar(message: String) {
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT)
+            .setBackgroundTint(ContextCompat.getColor(this, R.color.navy_200))
+            .show()
+    }
+
     private fun snackBarError(message: String) {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT)
             .setBackgroundTint(ContextCompat.getColor(this, R.color.red_400))
@@ -29,7 +35,7 @@ abstract class BaseActivity : AppCompatActivity(){
     }
 
 
-    fun showErrorAlert(cause: HttpResult, message: String? = null) {
+    fun showErrorAlert(message: String? = null) {
         snackBarError(message ?: "Unknown Error!")
     }
 }

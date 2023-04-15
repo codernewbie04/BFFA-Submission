@@ -1,6 +1,6 @@
 package com.akmalmf24.githubuser.abstraction.data
 
-import com.akmalmf24.githubuser.core.response.ErrorResponse
+import com.akmalmf24.githubuser.core.data.remote.response.ErrorResponse
 import com.akmalmf24.githubuser.core.utils.fromJson
 import com.google.gson.Gson
 import retrofit2.HttpException

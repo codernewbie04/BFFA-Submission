@@ -1,4 +1,4 @@
-package com.akmalmf24.githubuser.core.source.base
+package com.akmalmf24.githubuser.core.data.remote
 
 import com.akmalmf24.githubuser.abstraction.data.HttpExceptionError
 import com.akmalmf24.githubuser.abstraction.data.HttpResult

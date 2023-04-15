@@ -1,9 +1,9 @@
-package com.akmalmf24.githubuser.core
+package com.akmalmf24.githubuser.core.data.remote.service
 
 import com.akmalmf24.githubuser.BuildConfig
-import com.akmalmf24.githubuser.core.response.DetailUser
-import com.akmalmf24.githubuser.core.response.SearchResponse
-import com.akmalmf24.githubuser.core.response.Users
+import com.akmalmf24.githubuser.core.data.remote.response.DetailUser
+import com.akmalmf24.githubuser.core.data.remote.response.SearchResponse
+import com.akmalmf24.githubuser.core.data.remote.response.Users
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
@@ -17,6 +17,7 @@ interface GithubServices {
     companion object {
         private const val TOKEN = BuildConfig.TOKEN
     }
+
     @GET("users")
     @Headers("Authorization: token $TOKEN", "UserResponse-Agent: request")
     suspend fun users(): List<Users>
@@ -31,6 +32,8 @@ interface GithubServices {
 
     @GET("users/{username}/{type}")
     @Headers("Authorization: token $TOKEN", "UserResponse-Agent: request")
-    suspend fun userFollows(@Path("username") username: String,
-                            @Path("type") type: String): List<Users>
+    suspend fun userFollows(
+        @Path("username") username: String,
+        @Path("type") type: String
+    ): List<Users>
 }

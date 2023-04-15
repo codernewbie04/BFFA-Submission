@@ -1,5 +1,4 @@
-package com.akmalmf24.githubuser.core.response
-
+package com.akmalmf24.githubuser.core.data.remote.response
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -7,7 +6,8 @@ import com.google.gson.annotations.SerializedName
  * akmalmf007@gmail.com
  */
 data class DetailUser(
-    @SerializedName("login")  val login: String? = null,
+    @SerializedName("id")  val id: Int,
+    @SerializedName("login")  val login: String,
     @SerializedName("html_url")  val htmlUrl: String? = null,
     @SerializedName("avatar_url")  val avatarUrl: String? = null,
     @SerializedName("score")  val score: Any? = null,
